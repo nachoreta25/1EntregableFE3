@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Saludo</title>
+<style>
+    .error-message {
+        color: red;
+        font-style: italic;
+    }
+    .card {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+
+<h2>Tu comida favorita</h2>
+
+<form id="myForm">
+    <div>
+        <label for="nameInput">Nombre:</label>
+        <input type="text" id="nameInput" name="nameInput">
+    </div>
+    <div>
+        <label for="foodInput">Comida Favorita:</label>
+        <input type="text" id="foodInput" name="foodInput">
+    </div>
+    <button type="submit">Enviar</button>
+</form>
+
+<div id="errorContainer"></div>
+<div id="cardContainer" style="display: none;">
+    <div class="card" id="greetingCard"></div>
+</div>
+
+<script>
+    document.getElementById('myForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var nameInputValue = document.getElementById('nameInput').value.trim();
+        var foodInputValue = document.getElementById('foodInput').value.trim();
+
+        var errorContainer = document.getElementById('errorContainer');
+        var cardContainer = document.getElementById('cardContainer');
+        var greetingCard = document.getElementById('greetingCard');
+
+        // Limpiar mensajes de error previos
+        errorContainer.innerHTML = '';
+
+        // Validación de nameInput
+        if (nameInputValue.length < 3) {
+            showError("El nombre debe tener al menos 3 caracteres");
+            return;
+        }
+
+        // Validación de foodInput
+        if (foodInputValue.length < 6) {
+            showError("La comida favorita debe tener al menos 6 caracteres");
+            return;
+        }
+
+        // Mostrar el mensaje de saludo en la tarjeta
+        greetingCard.innerHTML = `
+            <p>¡Hola, ${nameInputValue}! Tu comida favorita es ${foodInputValue}.</p>
+        `;
+        cardContainer.style.display = 'block';
+    });
+
+    function showError(message) {
+        var errorContainer = document.getElementById('errorContainer');
+        errorContainer.innerHTML = `<p class="error-message">${message}</p>`;
+    }
+</script>
+
+</body>
+</html>
